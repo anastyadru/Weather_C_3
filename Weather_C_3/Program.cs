@@ -13,7 +13,19 @@ namespace Weather_C_3
             string forecastType;
             Console.WriteLine("Вы хотите знать прогноз погоды: на день или на 5 дней?");
             forecastType = Console.ReadLine();
+
+            if (forecastType.ToLower() == "на день")
+            {
+            }
             
+            else if (forecastType.ToLower() == "на 5 дней")
+            {
+            }
+
+            else
+            {
+            }
+
             string url;
             string cityName;
 
