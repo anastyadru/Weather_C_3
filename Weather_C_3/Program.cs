@@ -16,14 +16,18 @@ namespace Weather_C_3
 
             if (forecastType.ToLower() == "на день")
             {
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
             
             else if (forecastType.ToLower() == "на 5 дней")
             {
+                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             else
             {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, выберите прогноз погоды: на день или на 5 дней.");
+                return;
             }
 
             string url;
