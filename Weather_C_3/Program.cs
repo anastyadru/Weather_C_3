@@ -10,6 +10,10 @@ namespace Weather_C_3
 
         static async Task Main(string[] args)
         {
+            string forecastType;
+            Console.WriteLine("Вы хотите знать прогноз погоды: на день или на 5 дней?");
+            forecastType = Console.ReadLine();
+            
             string url;
             string cityName;
 
