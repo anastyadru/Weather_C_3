@@ -10,26 +10,6 @@ namespace Weather_C_3
 
         static async Task Main(string[] args)
         {
-            string forecastType;
-            Console.WriteLine("Вы хотите знать прогноз погоды: на день или на 5 дней?");
-            forecastType = Console.ReadLine();
-
-            if (forecastType.ToLower() == "на день")
-            {
-                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
-            }
-            
-            else if (forecastType.ToLower() == "на 5 дней")
-            {
-                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
-            }
-
-            else
-            {
-                Console.WriteLine("Некорректный ввод. Пожалуйста, выберите прогноз погоды: на день или на 5 дней.");
-                return;
-            }
-
             string url;
             string cityName;
 
@@ -48,6 +28,26 @@ namespace Weather_C_3
                 
                 cityName = Console.ReadLine();
                 url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+            }
+            
+            string weatherType;
+            Console.WriteLine("Вы хотите знать прогноз погоды: на день или на 5 дней?");
+            weatherType = Console.ReadLine();
+
+            if (weatherType.ToLower() == "на день")
+            {
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+            }
+            
+            else if (weatherType.ToLower() == "на 5 дней")
+            {
+                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+            }
+
+            else
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, выберите прогноз погоды: на день или на 5 дней.");
+                return;
             }
 
             var information = new Information();
