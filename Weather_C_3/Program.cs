@@ -80,11 +80,14 @@ namespace Weather_C_3
                 {
                     HttpResponseMessage response = await client.GetAsync(url);
 
-                    string responseBody = await response.Content.ReadAsStringAsync();
-
-                    WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
-
-                    return weatherData;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
+                        return weatherData;
+                    }
+                    
+                    return null;
                 }
             }
 
