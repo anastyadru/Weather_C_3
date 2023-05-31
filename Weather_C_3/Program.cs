@@ -15,43 +15,38 @@ namespace Weather_C_3
 
             try
             {
-                Console.WriteLine(
-                    "Введите, для какого города прогноз погоды на 5 дней: Minsk, London, Paris, NewYork, Warsaw");
+                Console.WriteLine("Введите, для какого города прогноз погоды: Minsk, London, Paris, NewYork, Warsaw");
 
                 cityName = Console.ReadLine();
-                url =
-                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                Console.WriteLine("Такого города не существует в заготовленном списке. Введите город вручную: ");
+                Console.WriteLine("Такого города не существует в списке. Введите город вручную: ");
 
                 cityName = Console.ReadLine();
-                url =
-                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             string weatherType;
-            Console.WriteLine("Вы хотите знать прогноз погоды: на день или на 5 дней?");
+            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?");
             weatherType = Console.ReadLine();
 
-            if (weatherType.ToLower() == "на день")
+            if (weatherType.ToLower() == "На 1 день")
             {
-                url =
-                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
-            else if (weatherType.ToLower() == "на 5 дней")
+            else if (weatherType.ToLower() == "На 5 дней")
             {
-                url =
-                    $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             else
             {
-                Console.WriteLine("Некорректный ввод. Пожалуйста, выберите прогноз погоды: на день или на 5 дней.");
+                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на день или на 5 дней?");
                 return;
             }
 
@@ -78,14 +73,13 @@ namespace Weather_C_3
             Console.ReadLine();
         }
 
-        public class Information
+        private class Information
         {
 
             public async Task<WeatherData> PrintAsync(string city)
             {
                 using (var client = new HttpClient())
                 {
-
                     HttpResponseMessage response = await client.GetAsync(city);
 
                     string responseBody = await response.Content.ReadAsStringAsync();
