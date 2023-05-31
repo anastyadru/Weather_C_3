@@ -18,7 +18,6 @@ namespace Weather_C_3
                 Console.WriteLine("Введите, для какого города прогноз погоды: Minsk, London, Paris, NewYork, Warsaw");
 
                 cityName = Console.ReadLine();
-                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             catch (Exception ex)
@@ -27,7 +26,6 @@ namespace Weather_C_3
                 Console.WriteLine("Такого города не существует в списке. Введите город вручную: ");
 
                 cityName = Console.ReadLine();
-                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
             string weatherType;
@@ -76,11 +74,11 @@ namespace Weather_C_3
         private class Information
         {
 
-            public async Task<WeatherData> PrintAsync(string city)
+            public async Task<WeatherData> PrintAsync(string url)
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(city);
+                    HttpResponseMessage response = await client.GetAsync(url);
 
                     string responseBody = await response.Content.ReadAsStringAsync();
 
