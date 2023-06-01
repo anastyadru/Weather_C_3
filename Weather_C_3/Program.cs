@@ -32,12 +32,12 @@ namespace Weather_C_3
             Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?");
             weatherType = Console.ReadLine();
 
-            if (weatherType.ToLower() == "На 1 день")
+            if (weatherType != null && weatherType.ToLower() == "На 1 день")
             {
                 url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
 
-            else if (weatherType.ToLower() == "На 5 дней")
+            else if (weatherType != null && weatherType.ToLower() == "На 5 дней")
             {
                 url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
             }
@@ -86,7 +86,6 @@ namespace Weather_C_3
                         WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
                         return weatherData;
                     }
-                    
                     return null;
                 }
             }
