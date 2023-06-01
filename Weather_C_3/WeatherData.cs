@@ -16,6 +16,8 @@ namespace Weather_C_3
         
         public Data Data { get; set; }
         
+        public List<Forecast> ForecastList { get; set; }
+        
         public int Visibility { get; set; }
         
         public Wind Wind { get; set; }

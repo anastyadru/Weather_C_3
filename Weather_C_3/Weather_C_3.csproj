@@ -121,6 +121,7 @@
         <Compile Include="Controllers\HomeController.cs" />
         <Compile Include="Coordinates.cs" />
         <Compile Include="Data.cs" />
+        <Compile Include="Forecast.cs" />
         <Compile Include="Global.asax.cs">
             <DependentUpon>Global.asax</DependentUpon>
         </Compile>
