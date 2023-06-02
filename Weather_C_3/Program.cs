@@ -33,41 +33,68 @@ namespace Weather_C_3
             weatherType = Console.ReadLine();
             
             var information = new Information();
-            WeatherData weatherData = await information.PrintAsync(cityName);
-
             var result = "";
-
-            if (weatherData != null)
+            
+            if (weatherType != null && weatherType.ToLower() == "на 1 день")
             {
-                if (weatherType != null && weatherType.ToLower() == "на 1 день")
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                
+                WeatherData weatherData = await information.PrintAsync(url);
+                
+                if (weatherData != null)
                 {
-                    url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
-                    
                     result += $"Погода в городе {cityName} на сегодня: \n";
                     result += $"Температура: {weatherData.Data.Temp}°C\n";
                     result += $"Температура ощущается на: {weatherData.Data.FeelsLike}°C\n";
                     result += $"Давление: {weatherData.Data.Pressure}Pa\n";
                     result += $"Влажность: {weatherData.Data.Humidity}%\n";
                 }
-
-                else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
+                
+                else
                 {
-                    url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
-                    
-                    result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
-                    for (int i = 0; i < weatherData.ForecastList.Count; i++)
-                    {
-                        var forecast = weatherData.ForecastList[i];
-
-                        result += $"День {i + 1}: \n";
-                        result += $"Дата: {forecast.Date}\n";
-                        result += $"Температура: {forecast.Temp}°C\n";
-                        result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
-                        result += $"Давление: {forecast.Pressure}Pa\n";
-                        result += $"Влажность: {forecast.Humidity}%\n";
-                        result += "\n";
-                    }
+                    result += $"Ошибка получения данных о погоде в городе {cityName}\n";
                 }
+            }
+            
+            else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
+            {
+                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                
+                var weatherData = await information.PrintAsync(url);
+                
+                if (weatherData != null)
+                {
+                    var result = $"Прогноз погоды в городе {cityName} на 5 дней:\n";
+                    foreach (var weather in weatherData.Weather)
+                    {
+                        result += $"Дата: {weather.Date}\n";
+                        result += $"Температура: {weather.Main.Temp}°C\n";
+                        result += $"Описание: {weather.Weather[0].Description}\n";
+                        result += $"Давление: {weather.Main.Pressure}Pa\n";
+                        result += $"Влажность: {weather.Main.Humidity}%\n\n";
+                    }
+                    Console.WriteLine(result);
+                }
+                
+                else
+                {
+                    Console.WriteLine($"Ошибка получения данных о погоде в городе {cityName}");
+                }
+
+                    // result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
+                    // for (int i = 0; i < weatherData.ForecastList.Count; i++)
+                    // {
+                        // var forecast = weatherData.ForecastList[i];
+
+                        // result += $"День {i + 1}: \n";
+                        // result += $"Дата: {forecast.Date}\n";
+                        // result += $"Температура: {forecast.Temp}°C\n";
+                        // result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
+                        // result += $"Давление: {forecast.Pressure}Pa\n";
+                        // result += $"Влажность: {forecast.Humidity}%\n";
+                        // result += "\n";
+                    // }
+                // }
 
                 else
                 {
