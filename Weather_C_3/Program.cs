@@ -7,20 +7,19 @@ namespace Weather_C_3
 {
     public class Program
     {
-
-        public async Task<WeatherData> PrintAsync(string url)
+        private async Task<WeatherData> PrintAsync(string url)
         {
             using (var client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
-
+                
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
                     WeatherData weatherData = JsonConvert.DeserializeObject<WeatherData>(responseBody);
                     return weatherData;
                 }
-
+                
                 return null;
             }
         }
@@ -40,7 +39,6 @@ namespace Weather_C_3
             {
                 Console.WriteLine(ex);
                 Console.WriteLine("Такого города не существует в списке. Введите город вручную: ");
-
                 cityName = Console.ReadLine();
             }
 
@@ -49,19 +47,18 @@ namespace Weather_C_3
             Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?");
             weatherType = Console.ReadLine();
 
-            // var information = new Information();
+            var program = new Program();
 
             if (weatherType != null && weatherType.ToLower() == "на 1 день")
             {
-                url =
-                    $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
 
-                WeatherData weatherData = await information.PrintAsync(url);
+                WeatherData weatherData = await program.PrintAsync(url);
                 var result = "";
 
                 if (weatherData != null)
                 {
-                    result += $"Погода в городе {cityName} на сегодня: \n";
+                    result += $"Прогноз погоды в городе {cityName} на сегодня: \n";
                     result += $"Температура: {weatherData.Data.Temp}°C\n";
                     result += $"Температура ощущается на: {weatherData.Data.FeelsLike}°C\n";
                     result += $"Давление: {weatherData.Data.Pressure}Pa\n";
@@ -79,10 +76,9 @@ namespace Weather_C_3
 
             else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
             {
-                url =
-                    $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
 
-                WeatherData weatherData = await information.PrintAsync(url);
+                WeatherData weatherData = await program.PrintAsync(url);
                 var result = "";
 
                 if (weatherData != null)
@@ -112,8 +108,7 @@ namespace Weather_C_3
 
             else
             {
-                Console.WriteLine(
-                    "Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней?");
+                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней.");
             }
         }
     }
