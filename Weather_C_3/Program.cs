@@ -54,6 +54,9 @@ namespace Weather_C_3
                 {
                     result += $"Ошибка получения данных о погоде в городе {cityName}\n";
                 }
+                
+                Console.WriteLine(result);
+                Console.ReadLine();
             }
             
             else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
@@ -61,7 +64,7 @@ namespace Weather_C_3
                 url =
                     $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
 
-                var weatherData = await information.PrintAsync(url);
+                WeatherData weatherData = await information.PrintAsync(url);
                 var result = "";
 
                 if (weatherData != null)
@@ -69,7 +72,7 @@ namespace Weather_C_3
                     result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
                     for (int i = 0; i < weatherData.ForecastList.Count; i++)
                     {
-                        var forecast = weatherData.ForecastList[i];
+                        Forecast forecast = weatherData.ForecastList[i];
 
                         result += $"День {i + 1}: \n";
                         result += $"Дата: {forecast.Date}\n";
@@ -77,7 +80,6 @@ namespace Weather_C_3
                         result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
                         result += $"Давление: {forecast.Pressure}Pa\n";
                         result += $"Влажность: {forecast.Humidity}%\n";
-                        result += "\n";
                     }
                 }
 
@@ -85,13 +87,18 @@ namespace Weather_C_3
                 {
                     result += $"Ошибка получения данных о погоде в городе {cityName}\n";
                 }
+                
+                Console.WriteLine(result);
+                Console.ReadLine();
             }
-
+            
             else
             {
                 Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней?");
                 return;
             }
+            
+            Console.ReadLine();
         }
 
         private class Information 
