@@ -71,7 +71,7 @@ namespace Weather_C_3
 
                 else
                 {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на день или на 5 дней?");
+                    Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней?");
                     return;
                 }
             }
@@ -88,11 +88,11 @@ namespace Weather_C_3
         private class Information 
         {
 
-            public async Task<WeatherData> PrintAsync(string cityName)
+            public async Task<WeatherData> PrintAsync(string url)
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(cityName);
+                    HttpResponseMessage response = await client.GetAsync(url);
 
                     if (response.IsSuccessStatusCode)
                     {

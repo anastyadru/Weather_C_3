@@ -22,7 +22,7 @@ namespace Weather_C_3
         
         public Wind Wind { get; set; }
         
-        public Clouds Clouds { get; set; }
+        public Clouds Clouds { get; set; }    
         
         public int Dt { get; set; }
         
