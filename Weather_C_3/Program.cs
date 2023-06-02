@@ -33,13 +33,13 @@ namespace Weather_C_3
             weatherType = Console.ReadLine();
             
             var information = new Information();
-            var result = "";
-            
+
             if (weatherType != null && weatherType.ToLower() == "на 1 день")
             {
                 url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 
                 WeatherData weatherData = await information.PrintAsync(url);
+                var result = "";
                 
                 if (weatherData != null)
                 {
@@ -58,58 +58,40 @@ namespace Weather_C_3
             
             else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
             {
-                url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
-                
+                url =
+                    $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
+
                 var weatherData = await information.PrintAsync(url);
-                
+                var result = "";
+
                 if (weatherData != null)
                 {
-                    var result = $"Прогноз погоды в городе {cityName} на 5 дней:\n";
-                    foreach (var weather in weatherData.Weather)
+                    result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
+                    for (int i = 0; i < weatherData.ForecastList.Count; i++)
                     {
-                        result += $"Дата: {weather.Date}\n";
-                        result += $"Температура: {weather.Main.Temp}°C\n";
-                        result += $"Описание: {weather.Weather[0].Description}\n";
-                        result += $"Давление: {weather.Main.Pressure}Pa\n";
-                        result += $"Влажность: {weather.Main.Humidity}%\n\n";
+                        var forecast = weatherData.ForecastList[i];
+
+                        result += $"День {i + 1}: \n";
+                        result += $"Дата: {forecast.Date}\n";
+                        result += $"Температура: {forecast.Temp}°C\n";
+                        result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
+                        result += $"Давление: {forecast.Pressure}Pa\n";
+                        result += $"Влажность: {forecast.Humidity}%\n";
+                        result += "\n";
                     }
-                    Console.WriteLine(result);
                 }
-                
-                else
-                {
-                    Console.WriteLine($"Ошибка получения данных о погоде в городе {cityName}");
-                }
-
-                    // result += $"Прогноз погоды в городе {cityName} на 5 дней: \n";
-                    // for (int i = 0; i < weatherData.ForecastList.Count; i++)
-                    // {
-                        // var forecast = weatherData.ForecastList[i];
-
-                        // result += $"День {i + 1}: \n";
-                        // result += $"Дата: {forecast.Date}\n";
-                        // result += $"Температура: {forecast.Temp}°C\n";
-                        // result += $"Температура ощущается на: {forecast.FeelsLike}°C\n";
-                        // result += $"Давление: {forecast.Pressure}Pa\n";
-                        // result += $"Влажность: {forecast.Humidity}%\n";
-                        // result += "\n";
-                    // }
-                // }
 
                 else
                 {
-                    Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней?");
-                    return;
+                    result += $"Ошибка получения данных о погоде в городе {cityName}\n";
                 }
             }
-            
+
             else
             {
-                result += $"Ошибка получения данных о погоде в городе {cityName}\n";
+                Console.WriteLine("Некорректный ввод. Пожалуйста, укажите, на сколько дней Вы хотите знать прогноз погоды: на 1 день или на 5 дней?");
+                return;
             }
-
-            Console.WriteLine(result);
-            Console.ReadLine();
         }
 
         private class Information 
