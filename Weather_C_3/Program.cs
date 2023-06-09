@@ -43,10 +43,10 @@ namespace Weather_C_3
             return cityName;
         }
 
-        private static string GetWeatherType()
+        private static int GetWeatherType()
         {
-            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?");
-            string weatherType = Console.ReadLine();
+            Console.WriteLine("На сколько дней Вы хотите знать прогноз погоды: на 1 день, на 5 дней?"); 
+            var weatherType = int.Parse(Console.ReadLine());
             return weatherType;
         }
 
@@ -98,16 +98,16 @@ namespace Weather_C_3
 
         private static async Task Main(string[] args)
         {
-            string cityName = GetCityName();
-            string weatherType = GetWeatherType();
+            var cityName = GetCityName();
+            var weatherType = GetWeatherType();
             
-            if (weatherType != null && weatherType.ToLower() == "на 1 день")
+            if (weatherType == 1)
             {
                 string url = $"https://api.openweathermap.org/data/2.5/weather?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
                 PrintCurrentWeather(weatherData, cityName);
             }
-            else if (weatherType != null && weatherType.ToLower() == "на 5 дней")
+            else if (weatherType == 5)
             {
                 string url = $"https://api.openweathermap.org/data/2.5/forecast?q={cityName}&appid=d6bfd60ae10dc578300a860f105ed749&units=metric&lang=ru";
                 WeatherData weatherData = await GetWeatherDataAsync(url);
